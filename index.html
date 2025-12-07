@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Simulador MIC-1 (JS Version)</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="main-container">
+            <div class="panel left-panel">
+                <div class="section-title">Editor Assembly</div>
+                <textarea id="editor" spellcheck="false">
+                    LOCO 10
+                    STOD 10
+
+                    LOCO 5
+                    SUBD 10
+                    STOD 11 
+                    HALT 
+                </textarea>
+
+                <div class="controls-area">
+                    <button id="btn-compile" class="action-btn">Compilar & Carregar</button>
+                    
+                    <div class="playback-controls">
+                        <button id="btn-run">▶ Run</button>
+                        <button id="btn-pause">⏸ Pause</button>
+                        <button id="btn-step">⏭ Ciclo</button>
+                        <button id="btn-reset">⏹ Reset</button>
+                    </div>
+
+                    <div class="speed-control">
+                        <label for="speed-slider">Velocidade (Hz): <span id="speed-val">5</span></label>
+                        <input type="range" id="speed-slider" min="1" max="20" value="5">
+                    </div>
+                </div>
+
+                <div class="section-title">Histórico de Microinstruções</div>
+                <div id="micro-log" class="log-display">
+                    <div class="log-line">Sistema iniciado...</div>
+                </div>
+            </div>
+
+            <div class="panel right-panel">
+                
+                <div class="section-container">
+                    <div class="section-title">Registradores (CPU)</div>
+                    <div class="registers-grid" id="registers-container">
+                        <div class="reg-card">
+                            <div class="reg-name">PC</div>
+                            <div class="reg-hex">0000</div>
+                            <div class="reg-dec">0</div>
+                        </div>
+                        </div>
+                </div>
+
+                <div class="section-container">
+                    <div class="tabs">
+                        <button class="tab-btn active" onclick="switchTab('data')">Cache DADOS</button>
+                        <button class="tab-btn" onclick="switchTab('inst')">Cache INSTR.</button>
+                    </div>
+                    <div id="cache-view" class="table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr><th>Linha</th><th>V</th><th>Tag</th><th>D</th><th>Dados (Bloco)</th></tr>
+                            </thead>
+                            <tbody id="cache-body">
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="section-container full-height">
+                    <div class="section-title">Memória Principal (RAM)</div>
+                    <div class="table-wrapper memory-scroll">
+                        <table class="data-table">
+                            <thead>
+                                <tr><th>Addr</th><th>Binário</th><th>Decimal</th><th>Hex</th></tr>
+                            </thead>
+                            <tbody id="memory-body">
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <script src="cache.js"></script>          
+        <script src="MIC1_Componentes.js"></script>  
+        <script src="assembly.js"></script>      
+        <script src="main.js"></script>           
+    </body>
+</html>
